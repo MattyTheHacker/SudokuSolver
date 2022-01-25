@@ -25,7 +25,8 @@ public class SudokuSolver {
         long recStartTime = System.nanoTime();
         recursiveSolveBoard(board);
         long recEndTime = System.nanoTime();
-        long recDuration = recEndTime - recStartTime;
+        long recDuration = (recEndTime - recStartTime);
+        double recDurationMs = recDuration * 0.000001;
         String b1 = Arrays.deepToString(board);
         boolean recursiveValid = isValidSudoku(board);
 
@@ -33,19 +34,23 @@ public class SudokuSolver {
         smartSolveBoard(board);
         long nonRecEndTime = System.nanoTime();
         long nonRecDuration = nonRecEndTime - nonRecStartTime;
+        double nonRecDurationMs = nonRecDuration * 0.000001;
         String b2 = Arrays.deepToString(board);
         boolean nonRecursiveValid = isValidSudoku(board);
 
         boolean identical = b1.equals(b2);
         printBoard(board);
 
+        long difference = (recDuration - nonRecDuration);
+
         System.out.println();
         System.out.println("[INFO] The recursive method recursed " + recursiveCount + " times.");
         System.out.println("[INFO] The non-recursive method looped the board " + nonRecursiveCount + " times.");
         System.out.println("[INFO] The recursive method provided a valid solution: " + recursiveValid);
         System.out.println("[INFO] The non-recursive method provided a valid solution: " + nonRecursiveValid);
-        System.out.println("[INFO] The recursive method provided a solution in " + recDuration + "ns");
-        System.out.println("[INFO] The non-recursive method provided a solution in " + nonRecDuration + "ns");
+        System.out.printf("[INFO] The recursive method provided a solution in %.3fms%n", recDurationMs);
+        System.out.printf("[INFO] The non-recursive method provided a solution in %.3fms%n", nonRecDurationMs);
+        System.out.println("[INFO] The non-recursrive method was " + difference + "ns faster.");
 
         if (!identical) {
             System.out.println("[WARN] The solution provided by the two methods did not match.");
@@ -142,6 +147,7 @@ public class SudokuSolver {
         while (!solved) {
             for (int row = 0; row < GRID_SIZE; row++) {
                 for (int col = 0; col < GRID_SIZE; col++) {
+                    nonRecursiveCount++;
                     if (board[row][col] == 0) {
                         for (int numToCheck = 1; numToCheck <= GRID_SIZE; numToCheck++) {
                             if (isValidLocation(board, numToCheck, row, col)) {
@@ -155,7 +161,6 @@ public class SudokuSolver {
                     }
                 }
             }
-            nonRecursiveCount++;
             solved = true;
             for (int row = 0; row < GRID_SIZE; row++) {
                 for (int col = 0; col < GRID_SIZE; col++) {
