@@ -23,22 +23,28 @@ public class SudokuSolver {
 
     public static void main(String[] args) {
         int[][] board = {
-                {0, 0, 0, 5, 0, 4, 0, 6, 0},
-                {5, 0, 0, 6, 9, 0, 0, 0, 3},
-                {8, 0, 0, 0, 3, 0, 0, 0, 0},
-                {9, 0, 0, 0, 0, 0, 8, 5, 0},
-                {7, 0, 8, 0, 0, 0, 1, 0, 4},
-                {0, 1, 5, 0, 0, 0, 0, 0, 6},
-                {0, 8, 0, 0, 4, 0, 6, 0, 9},
-                {6, 0, 0, 0, 8, 3, 0, 0, 1},
-                {0, 9, 0, 7, 0, 6, 0, 0, 0}
+                {1, 0, 0, 0, 0, 7, 0, 9, 0},
+                {0, 3, 0, 0, 2, 0, 0, 0, 8},
+                {0, 0, 9, 6, 0, 0, 5, 0, 0},
+                {0, 0, 5, 3, 0, 0, 9, 0, 0},
+                {0, 1, 0, 0, 8, 0, 0, 0, 2},
+                {6, 0, 0, 0, 0, 4, 0, 0, 0},
+                {3, 0, 0, 0, 0, 0, 0, 1, 0},
+                {0, 4, 0, 0, 0, 0, 0, 0, 7},
+                {0, 0, 7, 0, 0, 0, 3, 0, 0}
         };
 
+        long recStartTime = System.nanoTime();
         recursiveSolveBoard(board);
+        long recEndTime = System.nanoTime();
+        long recDuration = recEndTime - recStartTime;
         String b1 = Arrays.deepToString(board);
         boolean recursiveValid = isValidSudoku(board);
 
+        long nonRecStartTime = System.nanoTime();
         smartSolveBoard(board);
+        long nonRecEndTime = System.nanoTime();
+        long nonRecDuration = nonRecEndTime - nonRecStartTime;
         String b2 = Arrays.deepToString(board);
         boolean nonRecursiveValid = isValidSudoku(board);
 
@@ -50,6 +56,8 @@ public class SudokuSolver {
         System.out.println("[INFO] The non-recursive method looped the board " + nonRecursiveCount + " times.");
         System.out.println("[INFO] The recursive method provided a valid solution: " + recursiveValid);
         System.out.println("[INFO] The non-recursive method provided a valid solution: " + nonRecursiveValid);
+        System.out.println("[INFO] The recursive method provided a solution in " + recDuration + "ns");
+        System.out.println("[INFO] The non-recursive method provided a solution in " + nonRecDuration + "ns");
 
         if (!identical) {
             System.out.println("[WARN] The solution provided by the two methods did not match.");
