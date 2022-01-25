@@ -6,24 +6,51 @@ import static java.lang.Math.sqrt;
 public class SudokuSolver {
     private static final int GRID_SIZE = 9;
 
+    private static int recursiveCount = 0;
+    private static int nonRecursiveCount = 0;
+
+    private static final int[][] blankBoard = {
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+    };
+
     public static void main(String[] args) {
         int[][] board = {
-                {0, 7, 0, 0, 0, 4, 0, 0, 0},
-                {1, 2, 6, 0, 9, 5, 0, 0, 0},
-                {3, 4, 0, 6, 0, 0, 5, 0, 0},
-                {0, 8, 2, 0, 5, 0, 9, 0, 1},
-                {0, 0, 1, 2, 0, 0, 0, 0, 0},
-                {4, 5, 3, 9, 6, 1, 0, 0, 0},
-                {8, 3, 7, 5, 0, 0, 0, 4, 6},
-                {0, 0, 4, 0, 0, 0, 0, 5, 0},
-                {6, 1, 0, 7, 4, 0, 8, 0, 3}
+                {0,0,0,5,0,4,0,6,0},
+                {5,0,0,6,9,0,0,0,3},
+                {8,0,0,0,3,0,0,0,0},
+                {9,0,0,0,0,0,8,5,0},
+                {7,0,8,0,0,0,1,0,4},
+                {0,1,5,0,0,0,0,0,6},
+                {0,8,0,0,4,0,6,0,9},
+                {6,0,0,0,8,3,0,0,1},
+                {0,9,0,7,0,6,0,0,0}
         };
+
         recursiveSolveBoard(board);
         String b1 = Arrays.deepToString(board);
+        boolean recursiveValid = isValidSudoku(board);
+
         smartSolveBoard(board);
         String b2 = Arrays.deepToString(board);
+        boolean nonRecursiveValid = isValidSudoku(board);
+
         boolean identical = b1.equals(b2);
         printBoard(board);
+
+        System.out.println();
+        System.out.println("[INFO] The recursive method recursed " + recursiveCount + " times.");
+        System.out.println("[INFO] The non-recursive method looped the board " + nonRecursiveCount + " times.");
+        System.out.println("[INFO] The recursive method provided a valid solution: " + recursiveValid);
+        System.out.println("[INFO] The non-recursive method provided a valid solution: " + nonRecursiveValid);
+
         if (!identical) {
             System.out.println("[WARN] The solution provided by the two methods did not match.");
         } else {
@@ -102,6 +129,17 @@ public class SudokuSolver {
                 !existsInBox(board, numberToCheck, row, column);
     }
 
+    private static boolean isValidSudoku(int[][] board) {
+        for (int row = 0; row < GRID_SIZE; row++) {
+            for (int col = 0; col < GRID_SIZE; col++) {
+                if (isValidLocation(board, board[row][col], row, col)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     private static void smartSolveBoard(int[][] board) {
         boolean solved = false;
         ArrayList<Integer> options = new ArrayList<>();
@@ -121,6 +159,7 @@ public class SudokuSolver {
                     }
                 }
             }
+            nonRecursiveCount++;
             solved = true;
             for (int row = 0; row < GRID_SIZE; row++) {
                 for (int col = 0; col < GRID_SIZE; col++) {
@@ -134,6 +173,7 @@ public class SudokuSolver {
     }
 
     private static boolean recursiveSolveBoard(int[][] board) {
+        recursiveCount++;
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int column = 0; column < GRID_SIZE; column++) {
                 if (board[row][column] == 0) {
