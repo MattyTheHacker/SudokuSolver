@@ -9,18 +9,6 @@ public class SudokuSolver {
     private static int recursiveCount = 0;
     private static int nonRecursiveCount = 0;
 
-    private static final int[][] blankBoard = {
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {}
-    };
-
     public static void main(String[] args) {
         int[][] board = {
                 {1, 0, 0, 0, 0, 7, 0, 9, 0},
