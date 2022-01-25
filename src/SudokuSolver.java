@@ -41,7 +41,7 @@ public class SudokuSolver {
         boolean identical = b1.equals(b2);
         printBoard(board);
 
-        long difference = (recDuration - nonRecDuration);
+        double difference = (recDurationMs - nonRecDurationMs);
 
         System.out.println();
         System.out.println("[INFO] The recursive method recursed " + recursiveCount + " times.");
@@ -50,7 +50,7 @@ public class SudokuSolver {
         System.out.println("[INFO] The non-recursive method provided a valid solution: " + nonRecursiveValid);
         System.out.printf("[INFO] The recursive method provided a solution in %.3fms%n", recDurationMs);
         System.out.printf("[INFO] The non-recursive method provided a solution in %.3fms%n", nonRecDurationMs);
-        System.out.println("[INFO] The non-recursrive method was " + difference + "ns faster.");
+        System.out.printf("[INFO] The non-recursrive method was %.3fms faster.%n", difference);
 
         if (!identical) {
             System.out.println("[WARN] The solution provided by the two methods did not match.");
