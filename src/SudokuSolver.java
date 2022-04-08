@@ -10,17 +10,7 @@ public class SudokuSolver {
     private static int nonRecursiveCount = 0;
 
     public static void main(String[] args) {
-        int[][] board = new int[][]{
-                {0, 7, 0, 0, 9, 0, 3, 0, 8},
-                {0, 0, 0, 0, 0, 0, 1, 0, 0},
-                {0, 0, 9, 0, 0, 4, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 5, 0},
-                {0, 3, 0, 0, 4, 0, 9, 0, 7},
-                {2, 0, 0, 6, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 8, 0, 0, 1, 0},
-                {3, 0, 0, 0, 0, 2, 8, 0, 5},
-                {0, 5, 0, 0, 0, 0, 0, 4, 0}
-        };
+        int[][] board = new int[][]{{0, 7, 0, 0, 9, 0, 3, 0, 8}, {0, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 9, 0, 0, 4, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 5, 0}, {0, 3, 0, 0, 4, 0, 9, 0, 7}, {2, 0, 0, 6, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 8, 0, 0, 1, 0}, {3, 0, 0, 0, 0, 2, 8, 0, 5}, {0, 5, 0, 0, 0, 0, 0, 4, 0}};
 
         long recStartTime = System.nanoTime();
         recursiveSolveBoard(board);
@@ -62,31 +52,19 @@ public class SudokuSolver {
     public static void printBoard(int[][] board) {
         for (int i = 0; i < 9; i++) {
             System.out.print("\n");
-            if (i % 3 == 0)
-                System.out.print("\n");
+            if (i % 3 == 0) System.out.print("\n");
             for (int j = 0; j < 9; j++) {
-                if (j % 3 == 0)
-                    System.out.print(" ");
-                if (board[i][j] == 0)
-                    System.out.print(". ");
-                if (board[i][j] == 1)
-                    System.out.print("1 ");
-                if (board[i][j] == 2)
-                    System.out.print("2 ");
-                if (board[i][j] == 3)
-                    System.out.print("3 ");
-                if (board[i][j] == 4)
-                    System.out.print("4 ");
-                if (board[i][j] == 5)
-                    System.out.print("5 ");
-                if (board[i][j] == 6)
-                    System.out.print("6 ");
-                if (board[i][j] == 7)
-                    System.out.print("7 ");
-                if (board[i][j] == 8)
-                    System.out.print("8 ");
-                if (board[i][j] == 9)
-                    System.out.print("9 ");
+                if (j % 3 == 0) System.out.print(" ");
+                if (board[i][j] == 0) System.out.print(". ");
+                if (board[i][j] == 1) System.out.print("1 ");
+                if (board[i][j] == 2) System.out.print("2 ");
+                if (board[i][j] == 3) System.out.print("3 ");
+                if (board[i][j] == 4) System.out.print("4 ");
+                if (board[i][j] == 5) System.out.print("5 ");
+                if (board[i][j] == 6) System.out.print("6 ");
+                if (board[i][j] == 7) System.out.print("7 ");
+                if (board[i][j] == 8) System.out.print("8 ");
+                if (board[i][j] == 9) System.out.print("9 ");
             }
         }
         System.out.println();
@@ -125,9 +103,7 @@ public class SudokuSolver {
     }
 
     private static boolean isValidLocation(int[][] board, int numberToCheck, int row, int column) {
-        return !existsInRow(board, numberToCheck, row) &&
-                !existsInColumn(board, numberToCheck, column) &&
-                !existsInBox(board, numberToCheck, row, column);
+        return !existsInRow(board, numberToCheck, row) && !existsInColumn(board, numberToCheck, column) && !existsInBox(board, numberToCheck, row, column);
     }
 
     private static boolean isValidSudoku(int[][] board) {
